@@ -1,0 +1,71 @@
+const Course = require('../models/Course');
+
+// Static seed data (for now)
+const courses = [
+  {
+    id: "dsa",
+    title: "Data Structures & Algorithms",
+    description: "Master arrays, trees, graphs, sorting, and dynamic programming to ace coding interviews.",
+    icon: "🧮",
+    topics: [
+      { id: "dsa-1", title: "Arrays & Strings", explanation: "Fundamental data structures for storing sequential data. Learn traversal, manipulation, and common patterns like sliding window and two pointers." },
+      { id: "dsa-2", title: "Linked Lists", explanation: "Dynamic data structures with nodes connected by pointers. Understand singly, doubly linked lists and operations like insertion, deletion, reversal." },
+      { id: "dsa-3", title: "Stacks & Queues", explanation: "LIFO and FIFO structures used in expression evaluation, BFS, and system design like task schedulers." },
+      { id: "dsa-4", title: "Trees & BST", explanation: "Hierarchical structures for efficient searching and sorting. Learn traversals (inorder, preorder, postorder) and balanced trees." },
+      { id: "dsa-5", title: "Graphs", explanation: "Represent relationships between entities. Master BFS, DFS, shortest path algorithms (Dijkstra, Bellman-Ford), and topological sorting." },
+      { id: "dsa-6", title: "Dynamic Programming", explanation: "Optimization technique breaking problems into overlapping subproblems. Key patterns: memoization, tabulation, knapsack, LCS." },
+      { id: "dsa-7", title: "Sorting & Searching", explanation: "Comparison-based (merge, quick) and non-comparison (counting, radix) sorting. Binary search and its variations." },
+    ],
+  },
+  {
+    id: "dbms",
+    title: "Database Management Systems",
+    description: "Learn relational databases, SQL queries, normalization, and transaction management.",
+    icon: "🗄️",
+    topics: [
+      { id: "dbms-1", title: "ER Model & Schema Design", explanation: "Entity-Relationship diagrams for modeling real-world data. Convert ER diagrams to relational schemas." },
+      { id: "dbms-2", title: "SQL Fundamentals", explanation: "Structured Query Language for data manipulation. Master SELECT, JOIN, GROUP BY, subqueries, and aggregate functions." },
+      { id: "dbms-3", title: "Normalization", explanation: "Process of organizing data to reduce redundancy. Understand 1NF, 2NF, 3NF, BCNF and functional dependencies." },
+      { id: "dbms-4", title: "Transactions & Concurrency", explanation: "ACID properties ensure reliable transactions. Learn locking, deadlock handling, and isolation levels." },
+      { id: "dbms-5", title: "Indexing & Hashing", explanation: "Techniques to speed up data retrieval. B+ trees, hash indexes, and query optimization strategies." },
+      { id: "dbms-6", title: "NoSQL Basics", explanation: "Non-relational databases for flexible schemas. Document stores, key-value, column-family, and graph databases." },
+    ],
+  },
+  {
+    id: "os",
+    title: "Operating Systems",
+    description: "Understand process management, memory, file systems, and synchronization.",
+    icon: "⚙️",
+    topics: [
+      { id: "os-1", title: "Processes & Threads", explanation: "Fundamental units of execution. Learn process states, context switching, multithreading, and scheduling algorithms." },
+      { id: "os-2", title: "Memory Management", explanation: "Virtual memory, paging, segmentation, and page replacement algorithms (FIFO, LRU, Optimal)." },
+      { id: "os-3", title: "File Systems", explanation: "Organization of data on storage devices. Inodes, directories, file allocation methods, and journaling." },
+      { id: "os-4", title: "Synchronization", explanation: "Coordination of concurrent processes. Mutexes, semaphores, monitors, and deadlock prevention." },
+      { id: "os-5", title: "I/O & Storage", explanation: "Device drivers, buffering, RAID levels, and disk scheduling algorithms." },
+      { id: "os-6", title: "System Calls", explanation: "Interface between user programs and OS kernel. Process control, file operations, and communication." },
+    ],
+  },
+];
+
+exports.getAllCourses = async (req, res) => {
+  try {
+    // For now, return static data
+    res.json(courses);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+exports.getCourseById = async (req, res) => {
+  try {
+    const course = courses.find(c => c.id === req.params.id);
+    if (!course) {
+      return res.status(404).json({ message: 'Course not found' });
+    }
+    res.json(course);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
